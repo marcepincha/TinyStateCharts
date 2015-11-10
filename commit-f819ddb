@@ -1,0 +1,34 @@
+From f819ddb1973749094c7295f328a4046ce79ba0e4 Mon Sep 17 00:00:00 2001
+From: Marcelo Haberman <marcelo.haberman@gmail.com>
+Date: Tue, 10 Nov 2015 09:55:54 -0300
+Subject: =?UTF-8?q?testeo=20peque=C3=B1os=20cambios:=20-agregu=C3=A9=20hea?=
+ =?UTF-8?q?der=20en=20main.c?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+diff --git a/TestStateCharts/bin/Debug/TestStateCharts.exe b/TestStateCharts/bin/Debug/TestStateCharts.exe
+index d74f4e6..6239789 100644
+Binary files a/TestStateCharts/bin/Debug/TestStateCharts.exe and b/TestStateCharts/bin/Debug/TestStateCharts.exe differ
+diff --git a/TestStateCharts/main.c b/TestStateCharts/main.c
+index da73ce9..61a5f84 100644
+--- a/TestStateCharts/main.c
++++ b/TestStateCharts/main.c
+@@ -1,3 +1,13 @@
++/** \brief Módulo único, prototipo de lo que será la biblioteca para el manejo e implementación
++de StateCharts en C.
++ *
++ *  10/11/2015
++ *
++ */
++
++
++
++
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <stdint-gcc.h>
+diff --git a/TestStateCharts/obj/Debug/main.o b/TestStateCharts/obj/Debug/main.o
+index 0340e18..040a47d 100644
+Binary files a/TestStateCharts/obj/Debug/main.o and b/TestStateCharts/obj/Debug/main.o differ

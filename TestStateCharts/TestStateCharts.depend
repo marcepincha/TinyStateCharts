@@ -4,3 +4,11 @@
 	<stdlib.h>
 	<stdint-gcc.h>
 
+1447161157 source:c:\users\lenovo\documents\git\teststatecharts\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdint-gcc.h>
+	"TinyStateCharts.h"
+
+1447161157 c:\users\lenovo\documents\git\teststatecharts\tinystatecharts.h
+
