@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1447010130 source:c:\users\lenovo\documents\teststatecharts\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdint-gcc.h>
+
