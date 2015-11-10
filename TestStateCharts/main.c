@@ -37,28 +37,39 @@ void D_cAction(FSM_t *fsm);
 
 int main()
 {
-    estado_t estados[eNumberOfStates] =
+    evtHandler_t eventosA[eNumberOfEvents]= {0};
+    evtHandler_t eventosB[eNumberOfEvents]= {0};
+    evtHandler_t eventosC[eNumberOfEvents]= {0};
+    evtHandler_t eventosD[eNumberOfEvents]= {0};
+
+    eventosA[eEvtb]=A_b;
+    eventosB[eEvta]=B_a;
+    eventosC[eEvtd]=C_d;
+    eventosD[eEvtc]=D_c;
+
+
+    estado_t const estados[eNumberOfStates] =
     {
         {
             .id = eStateA,
-            .padre = estados + eStateD,
+            .padre = (pEstado_t)estados + eStateD,
             .hijoDefault = NULL,
             .historia = NULL,
             .guardaHistoria = 0,
 
-            .eventHandlers = NULL,
+            .eventHandlers = eventosA,
             .entry = A_entry,
             .exit = A_exit,
             .process = NULL
         },
         {
             .id = eStateB,
-            .padre = estados + eStateD,
+            .padre = (pEstado_t)estados + eStateD,
             .hijoDefault = NULL,
             .historia = NULL,
             .guardaHistoria = 0,
 
-            .eventHandlers = NULL,
+            .eventHandlers = eventosB,
             .entry = B_entry,
             .exit = B_exit,
             .process = NULL
@@ -70,7 +81,7 @@ int main()
             .historia = NULL,
             .guardaHistoria = 0,
 
-            .eventHandlers = NULL,
+            .eventHandlers = eventosC,
             .entry = C_entry,
             .exit = C_exit,
             .process = NULL
@@ -78,11 +89,11 @@ int main()
         {
             .id = eStateD,
             .padre = NULL,
-            .hijoDefault = estados+eStateA,
-            .historia = estados+eStateA,
+            .hijoDefault = (pEstado_t)estados+eStateA,
+            .historia = (pEstado_t)estados+eStateA,
             .guardaHistoria = 1,
 
-            .eventHandlers = NULL,
+            .eventHandlers = eventosD,
             .entry = D_entry,
             .exit = D_exit,
             .process = NULL
@@ -90,26 +101,12 @@ int main()
 
     };
 
-    evtHandler_t eventosA[eNumberOfEvents]= {NULL};
-    eventosA[eEvtb]=A_b;
-    estados[eStateA].eventHandlers=eventosA;
 
-    evtHandler_t eventosB[eNumberOfEvents]= {NULL};
-    eventosB[eEvta]=B_a;
-    estados[eStateB].eventHandlers=eventosB;
-
-    evtHandler_t eventosC[eNumberOfEvents]= {NULL};
-    eventosC[eEvtd]=C_d;
-    estados[eStateC].eventHandlers=eventosC;
-
-    evtHandler_t eventosD[eNumberOfEvents]= {NULL};
-    eventosD[eEvtc]=D_c;
-    estados[eStateD].eventHandlers=eventosD;
 
     FSM_t fsm =
     {
-        .estados = estados,
-        .actual = estados+eStartState,
+        .estados = (pEstado_t)estados,
+        .actual = (pEstado_t)estados+eStartState,
     };
 
 

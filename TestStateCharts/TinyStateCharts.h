@@ -61,7 +61,7 @@ struct estEstado
 struct estFSM
 {
     pEstado_t actual;
-    pEstado_t estados;
+    pEstado_t const estados;
 
 };
 
