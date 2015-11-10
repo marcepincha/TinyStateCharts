@@ -1,3 +1,13 @@
+/** \brief Módulo único, prototipo de lo que será la biblioteca para el manejo e implementación
+de StateCharts en C.
+ *
+ *  10/11/2015
+ *
+ */
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint-gcc.h>
