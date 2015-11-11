@@ -1,6 +1,8 @@
 #include "TinyStateCharts.h"
 #include <stdio.h>
 
+
+
 void A_entry(FSM_t *fsm);
 void B_entry(FSM_t *fsm);
 void C_entry(FSM_t *fsm);
@@ -21,6 +23,8 @@ void A_b(pEstado_t this, FSM_t* fsm,void* param);
 void B_a(pEstado_t this, FSM_t* fsm,void* param);
 void C_d(pEstado_t this, FSM_t* fsm,void* param);
 void D_c(pEstado_t this, FSM_t* fsm,void* param);
+
+void C_Tick10ms(pEstado_t this, FSM_t* fsm,void* param);
 
 void D_cAction(FSM_t *fsm);
 
@@ -102,6 +106,9 @@ evtHandler_t eventosD[eNumberOfEvents]= {0};
         eventosC[eEvtd]=C_d;
         eventosD[eEvtc]=D_c;
 
+        eventosC[eEvtTick10ms]=C_Tick10ms;
+
+
         FSM_init(&customFSM);
     }
 
@@ -117,8 +124,11 @@ void B_entry(FSM_t *fsm)
     puts("ESTADO B: Entry()");
 }
 
+
+uint16_t C_ticks10ms = 0;
 void C_entry(FSM_t *fsm)
 {
+    C_ticks10ms = 0;
     puts("ESTADO C: Entry()");
 }
 
@@ -168,6 +178,16 @@ void D_c(pEstado_t this, FSM_t* fsm,void* param)
 {
     //GUARDAS
     FSM_Transicion(fsm,(fsm->estados)+eStateC,D_cAction);
+}
+
+void C_Tick10ms(pEstado_t this, FSM_t* fsm,void* param)
+{
+    C_ticks10ms++;
+    //timeout a los 5 seg. vuelvo directo a StateA
+    if(C_ticks10ms > 500)
+    {
+        FSM_Transicion(fsm,(fsm->estados)+eStateA,NULL);
+    }
 }
 
 void D_cAction(FSM_t *fsm)

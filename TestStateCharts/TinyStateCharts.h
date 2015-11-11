@@ -28,26 +28,7 @@ typedef void (*callback_t)(FSM_t * const fsm);
 typedef void (*evtHandler_t)(pEstado_t const this, FSM_t* const fsm,void* const param);
 typedef void (*callbackAction_t)(FSM_t* const fsm);
 
-enum eEstado
-{
-    eStateA,
-    eStartState = eStateA,
-    eStateB,
-    eStateC,
-    eStateD,
-
-    eNumberOfStates
-};
-
-enum eEvento
-{
-    eEvta,
-    eEvtb,
-    eEvtc,
-    eEvtd,
-
-    eNumberOfEvents
-};
+#include "customFSM_events.h"
 
 struct estEstado
 {

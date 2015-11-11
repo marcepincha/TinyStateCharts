@@ -1,5 +1,6 @@
 #include "TinyStateCharts.h"
 
+
 void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro)
 {
 

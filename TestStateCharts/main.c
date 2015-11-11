@@ -14,10 +14,12 @@ de StateCharts en C.
 #include <windows.h>
 #include "TinyStateCharts.h"
 
+
+
 extern FSM_t customFSM;
 void customFSM_iniciar();
 
-DWORD hilito (void* ppp)
+DWORD hilitoTeclado ()
 {
     char c;
     do
@@ -46,12 +48,21 @@ DWORD hilito (void* ppp)
     while(1);
 }
 
+DWORD hilitoTimer (void* ppp)
+{
+    do{
+        Sleep(10);
+        FSM_DispatchEvent(&customFSM,eEvtTick10ms,NULL);
+    }while(1);
+}
+
 int main()
 {
 
     customFSM_iniciar();
 
-    CreateThread(NULL,0,hilito,NULL,0,NULL);
+    CreateThread(NULL,0,hilitoTeclado,NULL,0,NULL);
+    CreateThread(NULL,0,hilitoTimer,NULL,0,NULL);
 
     do
     {
