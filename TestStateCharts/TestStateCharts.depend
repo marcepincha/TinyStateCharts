@@ -4,16 +4,20 @@
 	<stdlib.h>
 	<stdint-gcc.h>
 
-1447162087 source:c:\users\lenovo\documents\git\teststatecharts\main.c
+1447247954 source:c:\users\lenovo\documents\git\teststatecharts\main.c
 	<stdio.h>
 	<stdlib.h>
-	<stdint-gcc.h>
+	<stdint.h>
+	<windows.h>
 	"TinyStateCharts.h"
 
-1447162349 c:\users\lenovo\documents\git\teststatecharts\tinystatecharts.h
+1447247710 c:\users\lenovo\documents\git\teststatecharts\tinystatecharts.h
+	<stdint.h>
 
-1447161206 source:c:\users\lenovo\documents\git\teststatecharts\tinystatecharts.c
+1447247965 source:c:\users\lenovo\documents\git\teststatecharts\tinystatecharts.c
+	"TinyStateCharts.h"
+
+1447247351 source:c:\users\lenovo\documents\git\teststatecharts\costomfsm.c
+	"TinyStateCharts.h"
 	<stdio.h>
-	<stdint-gcc.h>
-	"TinyStateCharts.h"
 

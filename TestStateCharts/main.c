@@ -10,194 +10,75 @@ de StateCharts en C.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint-gcc.h>
+#include <stdint.h>
+#include <windows.h>
 #include "TinyStateCharts.h"
 
+extern FSM_t customFSM;
+void customFSM_iniciar();
 
-
-void A_entry(FSM_t *fsm);
-void B_entry(FSM_t *fsm);
-void C_entry(FSM_t *fsm);
-void D_entry(FSM_t *fsm);
-
-void A_exit(FSM_t *fsm);
-void B_exit(FSM_t *fsm);
-void C_exit(FSM_t *fsm);
-void D_exit(FSM_t *fsm);
-
-
-void A_b(pEstado_t this, FSM_t* fsm,void* param);
-void B_a(pEstado_t this, FSM_t* fsm,void* param);
-void C_d(pEstado_t this, FSM_t* fsm,void* param);
-void D_c(pEstado_t this, FSM_t* fsm,void* param);
-
-void D_cAction(FSM_t *fsm);
-
-
+DWORD hilito (void* ppp)
+{
+    char c;
+    do
+    {
+        c=getchar();
+        switch(c)
+        {
+        case 'a':
+            FSM_DispatchEvent(&customFSM,eEvta,NULL);
+            break;
+        case 'b':
+            FSM_DispatchEvent(&customFSM,eEvtb,NULL);
+            break;
+        case 'c':
+            FSM_DispatchEvent(&customFSM,eEvtc,NULL);
+            break;
+        case 'd':
+            FSM_DispatchEvent(&customFSM,eEvtd,NULL);
+            break;
+        case 'x':
+            exit(0);
+        default:
+            break;
+        }
+    }
+    while(1);
+}
 
 int main()
 {
-    evtHandler_t eventosA[eNumberOfEvents]= {0};
-    evtHandler_t eventosB[eNumberOfEvents]= {0};
-    evtHandler_t eventosC[eNumberOfEvents]= {0};
-    evtHandler_t eventosD[eNumberOfEvents]= {0};
 
-    eventosA[eEvtb]=A_b;
-    eventosB[eEvta]=B_a;
-    eventosC[eEvtd]=C_d;
-    eventosD[eEvtc]=D_c;
+    customFSM_iniciar();
 
+    CreateThread(NULL,0,hilito,NULL,0,NULL);
 
-    estado_t const estados[eNumberOfStates] =
+    do
     {
-        {
-            .id = eStateA,
-            .padre = (pEstado_t)estados + eStateD,
-            .hijoDefault = NULL,
-            .historia = NULL,
-            .guardaHistoria = 0,
-
-            .eventHandlers = eventosA,
-            .entry = A_entry,
-            .exit = A_exit,
-            .process = NULL
-        },
-        {
-            .id = eStateB,
-            .padre = (pEstado_t)estados + eStateD,
-            .hijoDefault = NULL,
-            .historia = NULL,
-            .guardaHistoria = 0,
-
-            .eventHandlers = eventosB,
-            .entry = B_entry,
-            .exit = B_exit,
-            .process = NULL
-        },
-        {
-            .id = eStateC,
-            .padre = NULL,
-            .hijoDefault = NULL,
-            .historia = NULL,
-            .guardaHistoria = 0,
-
-            .eventHandlers = eventosC,
-            .entry = C_entry,
-            .exit = C_exit,
-            .process = NULL
-        },
-        {
-            .id = eStateD,
-            .padre = NULL,
-            .hijoDefault = (pEstado_t)estados+eStateA,
-            .historia = (pEstado_t)estados+eStateA,
-            .guardaHistoria = 1,
-
-            .eventHandlers = eventosD,
-            .entry = D_entry,
-            .exit = D_exit,
-            .process = NULL
-        },
-
-    };
+        Sleep(1000);
+        FSM_Process(&customFSM);
+    }
+    while(1);
 
 
-
-    FSM_t fsm =
-    {
-        .estados = (pEstado_t)estados,
-        .actual = (pEstado_t)estados+eStartState,
-    };
-
-
-    FSM_enterStates(&fsm, fsm.actual,NULL);
-    puts("---evento b");
-    FSM_DispatchEvent(&fsm, eEvtb, NULL);
 
     puts("---evento b");
-    FSM_DispatchEvent(&fsm, eEvtb, NULL);
+    FSM_DispatchEvent(&customFSM, eEvtb, NULL);
 
     puts("---evento a");
-    FSM_DispatchEvent(&fsm, eEvta, NULL);
+    FSM_DispatchEvent(&customFSM, eEvta, NULL);
 
     puts("---evento b");
-    FSM_DispatchEvent(&fsm, eEvtb, NULL);
+    FSM_DispatchEvent(&customFSM, eEvtb, NULL);
 
     puts("---evento c");
-    FSM_DispatchEvent(&fsm, eEvtc, NULL);
+    FSM_DispatchEvent(&customFSM, eEvtc, NULL);
 
     puts("---evento d");
-    FSM_DispatchEvent(&fsm, eEvtd, NULL);
+    FSM_DispatchEvent(&customFSM, eEvtd, NULL);
+
+
 
 
     return 0;
 }
-
-void A_entry(FSM_t *fsm)
-{
-    puts("ESTADO A: Entry()");
-}
-
-void B_entry(FSM_t *fsm)
-{
-    puts("ESTADO B: Entry()");
-}
-
-void C_entry(FSM_t *fsm)
-{
-    puts("ESTADO C: Entry()");
-}
-
-void D_entry(FSM_t *fsm)
-{
-    puts("ESTADO D: Entry()");
-}
-
-void A_exit(FSM_t *fsm)
-{
-    puts("ESTADO A: Exit()");
-}
-
-void B_exit(FSM_t *fsm)
-{
-    puts("ESTADO B: Exit()");
-}
-
-void C_exit(FSM_t *fsm)
-{
-    puts("ESTADO C: Exit()");
-}
-
-void D_exit(FSM_t *fsm)
-{
-    puts("ESTADO D: Exit()");
-}
-
-
-void A_b(pEstado_t this, FSM_t* fsm,void* param)
-{
-    //GUARDAS
-    FSM_Transicion(fsm,(fsm->estados)+eStateB,NULL);
-}
-
-void B_a(pEstado_t this, FSM_t* fsm,void* param)
-{
-    //GUARDAS
-    FSM_Transicion(fsm,(fsm->estados)+eStateA,NULL);
-}
-void C_d(pEstado_t this, FSM_t* fsm,void* param)
-{
-    //GUARDAS
-    FSM_Transicion(fsm,(fsm->estados)+eStateD,NULL);
-}
-void D_c(pEstado_t this, FSM_t* fsm,void* param)
-{
-    //GUARDAS
-    FSM_Transicion(fsm,(fsm->estados)+eStateC,D_cAction);
-}
-
-void D_cAction(FSM_t *fsm)
-{
-    puts("\tAccion de transición D->C por evento c");
-}
-

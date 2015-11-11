@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdint-gcc.h>
 #include "TinyStateCharts.h"
 
 void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro)
@@ -16,6 +14,11 @@ void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro)
     }
 }
 
+void FSM_init(FSM_t * const fsm)
+{
+    FSM_enterStates(fsm, (*fsm).actual,NULL);
+}
+
 pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t const ancestro)
 {
     pEstado_t pila[MAX_NESTED_LEVELS]= {0};
@@ -29,7 +32,7 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
     {
         if((*aux).guardaHistoria)
         {
-            aux = (*aux).historia;
+            aux = *((*aux).historia);
         }
         else
         {
@@ -49,7 +52,8 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
         pEstado_t padre = (*aux).padre;
         if(padre != NULL)
         {
-            (*padre).historia = aux;
+            pEstado_t * historia = (pEstado_t*) (*padre).historia;
+            *historia = aux;
         }
         aux = padre;
     }
@@ -123,7 +127,7 @@ void FSM_DispatchEvent(FSM_t *const fsm, const eventoId_t evento, void* const pa
 
     while(aux != NULL)
     {
-        handlersVector = (*aux).eventHandlers;
+        handlersVector = (evtHandler_t*)((*aux).eventHandlers);
         if(handlersVector != NULL)
         {
             evtHandler_t handler = handlersVector[evento];
@@ -138,4 +142,23 @@ void FSM_DispatchEvent(FSM_t *const fsm, const eventoId_t evento, void* const pa
     }
 
 
+}
+
+void FSM_Process(FSM_t * const fsm)
+{
+    pEstado_t aux;
+
+    aux = (*fsm).actual;
+
+    while(aux != NULL)
+    {
+
+        if((*aux).process != NULL)
+        {
+            (*aux).process(fsm);
+        }
+
+        aux = (*aux).padre;
+
+    }
 }
