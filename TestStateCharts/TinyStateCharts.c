@@ -107,7 +107,7 @@ pEstado_t FSM_getAncestroComun(pEstado_t const origen, pEstado_t const destino)
 void FSM_Transicion(FSM_t * const fsm, pEstado_t const destino,callbackAction_t const accion)
 {
 
-
+    /// TODO: ver si combiene hacer camino de entry, sino hay que recorrer dos veces
     pEstado_t ancestro = FSM_getAncestroComun((*fsm).actual,destino);
 
     FSM_exitStates(fsm, ancestro);
@@ -122,7 +122,7 @@ void FSM_Transicion(FSM_t * const fsm, pEstado_t const destino,callbackAction_t 
 
 }
 
-void FSM_DispatchEvent(FSM_t *const fsm, const eventoId_t evento, void* const param)
+void FSM_DispatchEvent(FSM_t *const fsm, const evento_t evento, void* const param)
 {
     evtHandler_t *handlersVector;
     pEstado_t aux;

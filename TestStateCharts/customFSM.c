@@ -1,7 +1,32 @@
+
 #include "TinyStateCharts.h"
+#include "customFSM_events.h"
 #include <stdio.h>
 
 
+enum eEstado
+{
+    eStateA,
+    eStartState = eStateA,
+    eStateB,
+    eStateC,
+    eStateD,
+
+    eNumberOfStates
+};
+
+/*
+enum eEvento
+{
+    eEvta,
+    eEvtb,
+    eEvtc,
+    eEvtd,
+    eEvtTick10ms,
+
+    eNumberOfEvents
+};
+*/
 
 void A_entry(FSM_t *fsm);
 void B_entry(FSM_t *fsm);
@@ -30,87 +55,97 @@ void D_cAction(FSM_t *fsm);
 
 pEstado_t estadosHistoria[eNumberOfStates] = {0};
 
-evtHandler_t eventosA[eNumberOfEvents]= {0};
-evtHandler_t eventosB[eNumberOfEvents]= {0};
-evtHandler_t eventosC[eNumberOfEvents]= {0};
-evtHandler_t eventosD[eNumberOfEvents]= {0};
+const evtHandler_t eventos [eNumberOfStates][eNumberOfEvents] =
+{
+    ///eEvtA    eEvtB   eEvtC   eEvtD   eEvtTick10ms
+    { NULL,     A_b,    NULL,   NULL,   NULL        }, /// eStateA
+    { B_a,      NULL,   NULL,   NULL,   NULL        }, /// eStateB
+    { NULL,     NULL,   NULL,   C_d,    C_Tick10ms  }, /// eStateC
+    { NULL,     NULL,   D_c,    NULL,   NULL        }, /// eStateD
+
+};
+
+//evtHandler_t eventosA[eNumberOfEvents]= {0};
+//evtHandler_t eventosB[eNumberOfEvents]= {0};
+//evtHandler_t eventosC[eNumberOfEvents]= {0};
+//evtHandler_t eventosD[eNumberOfEvents]= {0};
 
 
 
 
-    const estado_t estados[eNumberOfStates] =
+const estado_t estados[eNumberOfStates] =
+{
     {
-        {
 //            .id = eStateA,
-            .padre = (pEstado_t)estados + eStateD,
-            .hijoDefault = NULL,
-            .historia = &estadosHistoria[eStateA],
-            .guardaHistoria = 0,
+        .padre = (pEstado_t)estados + eStateD,
+        .hijoDefault = NULL,
+        .historia = &estadosHistoria[eStateA],
+        .guardaHistoria = 0,
 
-            .eventHandlers = eventosA,
-            .entry = A_entry,
-            .exit = A_exit,
-            .process = A_process
-        },
-        {
+        .eventHandlers = eventos[eStateA],
+        .entry = A_entry,
+        .exit = A_exit,
+        .process = A_process
+    },
+    {
 //            .id = eStateB,
-            .padre = (pEstado_t)estados + eStateD,
-            .hijoDefault = NULL,
-            .historia = &estadosHistoria[eStateB],
-            .guardaHistoria = 0,
+        .padre = (pEstado_t)estados + eStateD,
+        .hijoDefault = NULL,
+        .historia = &estadosHistoria[eStateB],
+        .guardaHistoria = 0,
 
-            .eventHandlers = eventosB,
-            .entry = B_entry,
-            .exit = B_exit,
-            .process = B_process
-        },
-        {
+        .eventHandlers = eventos[eStateB],
+        .entry = B_entry,
+        .exit = B_exit,
+        .process = B_process
+    },
+    {
 //            .id = eStateC,
-            .padre = NULL,
-            .hijoDefault = NULL,
-            .historia = &estadosHistoria[eStateC],
-            .guardaHistoria = 0,
+        .padre = NULL,
+        .hijoDefault = NULL,
+        .historia = &estadosHistoria[eStateC],
+        .guardaHistoria = 0,
 
-            .eventHandlers = eventosC,
-            .entry = C_entry,
-            .exit = C_exit,
-            .process = C_process
-        },
-        {
+        .eventHandlers = eventos[eStateC],
+        .entry = C_entry,
+        .exit = C_exit,
+        .process = C_process
+    },
+    {
 //            .id = eStateD,
-            .padre = NULL,
-            .hijoDefault = (pEstado_t)estados+eStateA,
-            .historia = &estadosHistoria[eStateA],
-            .guardaHistoria = 1,
+        .padre = NULL,
+        .hijoDefault = (pEstado_t)estados+eStateA,
+        .historia = &estadosHistoria[eStateA],
+        .guardaHistoria = 1,
 
-            .eventHandlers = eventosD,
-            .entry = D_entry,
-            .exit = D_exit,
-            .process = D_process
-        },
+        .eventHandlers = eventos[eStateD],
+        .entry = D_entry,
+        .exit = D_exit,
+        .process = D_process
+    },
 
-    };
-
-
-
-    FSM_t customFSM =
-    {
-        .estados = (pEstado_t)estados,
-        .actual = (pEstado_t)estados+eStartState,
-    };
-
-    void customFSM_iniciar()
-    {
-        eventosA[eEvtb]=A_b;
-        eventosB[eEvta]=B_a;
-        eventosC[eEvtd]=C_d;
-        eventosD[eEvtc]=D_c;
-
-        eventosC[eEvtTick10ms]=C_Tick10ms;
+};
 
 
-        FSM_init(&customFSM);
-    }
+
+FSM_t customFSM =
+{
+    .estados = (pEstado_t)estados,
+    .actual = (pEstado_t)estados+eStartState,
+};
+
+void customFSM_iniciar()
+{
+    //eventosA[eEvtb]=A_b;
+    //eventosB[eEvta]=B_a;
+    //eventosC[eEvtd]=C_d;
+    //eventosD[eEvtc]=D_c;
+
+    //eventosC[eEvtTick10ms]=C_Tick10ms;
+
+
+    FSM_init(&customFSM);
+}
 
 
 

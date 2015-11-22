@@ -13,6 +13,7 @@ de StateCharts en C.
 #include <stdint.h>
 #include <windows.h>
 #include "TinyStateCharts.h"
+#include "customFSM_events.h"
 
 
 
@@ -37,7 +38,7 @@ DWORD hilitoTeclado ()
             FSM_DispatchEvent(&customFSM,eEvtc,NULL);
             break;
         case 'd':
-            FSM_DispatchEvent(&customFSM,eEvtd,NULL);
+            FSM_DispatchEvent(&customFSM,(evento_t)eEvtd,NULL);
             break;
         case 'x':
             exit(0);
@@ -52,7 +53,7 @@ DWORD hilitoTimer (void* ppp)
 {
     do{
         Sleep(10);
-        FSM_DispatchEvent(&customFSM,eEvtTick10ms,NULL);
+        FSM_DispatchEvent(&customFSM,(evento_t)eEvtTick10ms,NULL);
     }while(1);
 }
 
@@ -74,19 +75,19 @@ int main()
 
 
     puts("---evento b");
-    FSM_DispatchEvent(&customFSM, eEvtb, NULL);
+    FSM_DispatchEvent(&customFSM, (evento_t)eEvtb, NULL);
 
     puts("---evento a");
-    FSM_DispatchEvent(&customFSM, eEvta, NULL);
+    FSM_DispatchEvent(&customFSM, (evento_t)eEvta, NULL);
 
     puts("---evento b");
-    FSM_DispatchEvent(&customFSM, eEvtb, NULL);
+    FSM_DispatchEvent(&customFSM, (evento_t)eEvtb, NULL);
 
     puts("---evento c");
-    FSM_DispatchEvent(&customFSM, eEvtc, NULL);
+    FSM_DispatchEvent(&customFSM, (evento_t)eEvtc, NULL);
 
     puts("---evento d");
-    FSM_DispatchEvent(&customFSM, eEvtd, NULL);
+    FSM_DispatchEvent(&customFSM, (evento_t)eEvtd, NULL);
 
 
 
