@@ -1,5 +1,8 @@
 #include "TinyStateCharts.h"
 
+void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro);
+pEstado_t FSM_enterStates(FSM_t * const fsm, pEstado_t const destino, pEstado_t const ancestro);
+pEstado_t FSM_getAncestroComun(pEstado_t const origen, pEstado_t const destino);
 
 void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro)
 {

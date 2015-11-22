@@ -53,9 +53,7 @@ struct estFSM
 };
 
  void FSM_init(FSM_t * const fsm);
-void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro);
-pEstado_t FSM_enterStates(FSM_t * const fsm, pEstado_t const destino, pEstado_t const ancestro);
-pEstado_t FSM_getAncestroComun(pEstado_t const origen, pEstado_t const destino);
+
 void FSM_Transicion(FSM_t * const fsm, pEstado_t const destino,callbackAction_t const accion);
 void FSM_DispatchEvent(FSM_t * const fsm, eventoId_t const evento, void* const param);
 void FSM_Process(FSM_t * const fsm);

@@ -61,8 +61,8 @@ int main()
 
     customFSM_iniciar();
 
-    CreateThread(NULL,0,hilitoTeclado,NULL,0,NULL);
-    CreateThread(NULL,0,hilitoTimer,NULL,0,NULL);
+    CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)hilitoTeclado,NULL,0,NULL);
+    CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)hilitoTimer,NULL,0,NULL);
 
     do
     {
