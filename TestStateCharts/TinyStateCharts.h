@@ -18,6 +18,8 @@ struct estEstado;
 typedef struct estEstado estado_t;
 typedef struct estEstado *pEstado_t;
 
+//struct estEvento;
+//typedef struct estEvento evento_t;
 typedef uint16_t evento_t;
 
 struct estFSM;
@@ -47,9 +49,16 @@ struct estEstado
 struct estFSM
 {
     pEstado_t actual;
-    pEstado_t const estados;
+    pEstado_t estados;
 
 };
+
+/*
+struct estEvento
+{
+    uint16_t signal;
+};
+*/
 
 void FSM_init(FSM_t * const fsm);
 

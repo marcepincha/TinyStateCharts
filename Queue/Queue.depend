@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1448661852 source:c:\users\lenovo\documents\git\queue\main.c
+	<stdio.h>
+	<stdlib.h>
+	"queue.h"
+
+1448661760 source:c:\users\lenovo\documents\git\queue\queue.c
+	"queue.h"
+	<string.h>
+	<stdio.h>
+
+1448661364 c:\users\lenovo\documents\git\queue\queue.h
+	<stdint.h>
+

@@ -13,7 +13,8 @@ void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro)
 
     while((*fsm).actual != NULL && (*fsm).actual != ancestro)
     {
-        (*(*fsm).actual).exit(fsm);
+        if( (*(*fsm).actual).exit )
+            (*(*fsm).actual).exit(fsm);
         (*fsm).actual = (*(*fsm).actual).padre;
     }
 }
@@ -67,7 +68,8 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
     {
         //Pop
         index--;
-        (*pila[index]).entry(fsm);
+        if( (*pila[index]).entry)
+            (*pila[index]).entry(fsm);
         (*fsm).actual = pila[index];
 
 

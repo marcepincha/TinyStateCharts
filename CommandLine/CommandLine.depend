@@ -1,0 +1,56 @@
+# depslib dependency file v1.0
+1449182493 source:c:\users\lenovo\documents\git\commandline\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<conio.h>
+	"../Queue/queue.h"
+	"../TestStateCharts/TinyStateCharts.h"
+	"parserFSM.h"
+	"command.h"
+
+1448596835 c:\users\lenovo\documents\git\commandline\tinystatecharts.h
+	<stdint.h>
+
+1448564437 source:c:\users\lenovo\documents\git\commandline\queue.c
+	"queue.h"
+	<string.h>
+	<stdio.h>
+
+1448563327 c:\users\lenovo\documents\git\commandline\queue.h
+	<stdint.h>
+
+1448596852 source:c:\users\lenovo\documents\git\commandline\tinystatecharts.c
+	"TinyStateCharts.h"
+
+1449517833 source:c:\users\lenovo\documents\git\commandline\customfsm.c
+	<stdio.h>
+	<string.h>
+	"../TestStateCharts/TinyStateCharts.h"
+	"../Queue/queue.h"
+	"command.h"
+
+1448664105 source:c:\users\lenovo\documents\git\teststatecharts\tinystatecharts.c
+	"TinyStateCharts.h"
+
+1448809083 c:\users\lenovo\documents\git\teststatecharts\tinystatecharts.h
+	<stdint.h>
+
+1448666946 source:c:\users\lenovo\documents\git\queue\queue.c
+	"queue.h"
+	<string.h>
+	<stdio.h>
+
+1448800470 c:\users\lenovo\documents\git\queue\queue.h
+	<stdint.h>
+
+1448827406 c:\users\lenovo\documents\git\commandline\parserfsm.h
+
+1449517756 source:c:\users\lenovo\documents\git\commandline\command.c
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+
+1449517475 c:\users\lenovo\documents\git\commandline\command.h
+	<stdint.h>
+

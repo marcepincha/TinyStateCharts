@@ -15,18 +15,13 @@ enum eEstado
     eNumberOfStates
 };
 
-/*
-enum eEvento
-{
-    eEvta,
-    eEvtb,
-    eEvtc,
-    eEvtd,
-    eEvtTick10ms,
+pEstado_t estadosHistoria[eNumberOfStates] = {0};
 
-    eNumberOfEvents
-};
-*/
+//evtHandler_t eventosA[eNumberOfEvents]= {0};
+//evtHandler_t eventosB[eNumberOfEvents]= {0};
+//evtHandler_t eventosC[eNumberOfEvents]= {0};
+//evtHandler_t eventosD[eNumberOfEvents]= {0};
+
 
 void A_entry(FSM_t *fsm);
 void B_entry(FSM_t *fsm);
@@ -53,8 +48,6 @@ void C_Tick10ms(pEstado_t this, FSM_t* fsm,void* param);
 
 void D_cAction(FSM_t *fsm);
 
-pEstado_t estadosHistoria[eNumberOfStates] = {0};
-
 const evtHandler_t eventos [eNumberOfStates][eNumberOfEvents] =
 {
     ///eEvtA    eEvtB   eEvtC   eEvtD   eEvtTick10ms
@@ -64,14 +57,6 @@ const evtHandler_t eventos [eNumberOfStates][eNumberOfEvents] =
     { NULL,     NULL,   D_c,    NULL,   NULL        }, /// eStateD
 
 };
-
-//evtHandler_t eventosA[eNumberOfEvents]= {0};
-//evtHandler_t eventosB[eNumberOfEvents]= {0};
-//evtHandler_t eventosC[eNumberOfEvents]= {0};
-//evtHandler_t eventosD[eNumberOfEvents]= {0};
-
-
-
 
 const estado_t estados[eNumberOfStates] =
 {
