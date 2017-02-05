@@ -26,6 +26,6 @@ extern const command_t cmdTable[];
 extern const uint8_t cmdTableSize;
 
 void DispatchCommand(command_req_t* cmd_req);
-command_req_t* CommandRequest_init(command_req_t *cmd_req, char* buffer, command_t *cmd_table);
+command_req_t* CommandRequest_init(command_req_t *cmd_req, char* buffer, command_t *cmd_table, uint16_t cmd_table_size);
 
 #endif // COMMAND_H_

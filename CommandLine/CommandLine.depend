@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1449182493 source:c:\users\lenovo\documents\git\commandline\main.c
+1449587721 source:c:\users\lenovo\documents\git\commandline\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -23,7 +23,7 @@
 1448596852 source:c:\users\lenovo\documents\git\commandline\tinystatecharts.c
 	"TinyStateCharts.h"
 
-1449517833 source:c:\users\lenovo\documents\git\commandline\customfsm.c
+1449588008 source:c:\users\lenovo\documents\git\commandline\customfsm.c
 	<stdio.h>
 	<string.h>
 	"../TestStateCharts/TinyStateCharts.h"
@@ -44,13 +44,15 @@
 1448800470 c:\users\lenovo\documents\git\queue\queue.h
 	<stdint.h>
 
-1448827406 c:\users\lenovo\documents\git\commandline\parserfsm.h
+1449579289 c:\users\lenovo\documents\git\commandline\parserfsm.h
+	"command.h"
 
-1449517756 source:c:\users\lenovo\documents\git\commandline\command.c
+1449570556 source:c:\users\lenovo\documents\git\commandline\command.c
 	<stdio.h>
 	<stdlib.h>
 	<stdint.h>
+	<string.h>
 
-1449517475 c:\users\lenovo\documents\git\commandline\command.h
+1449569663 c:\users\lenovo\documents\git\commandline\command.h
 	<stdint.h>
 

@@ -84,12 +84,14 @@ static const uint8_t END_INPUT_CHAR_CR = '\r';
 static const uint8_t END_INPUT_CHAR_LF = '\n';
 #define BUFFER_SIZE 32
 
-typedef struct estParserFSM{
+typedef struct estParserFSM
+{
     FSM_t super;
     uint16_t tickCount;
     char buffer[BUFFER_SIZE];
     int16_t buffer_index;
-}parserFSM_t;
+    responseHandler_t responseHandler;
+} parserFSM_t;
 
 
 void buffer_flush(parserFSM_t *fsm)
@@ -99,13 +101,15 @@ void buffer_flush(parserFSM_t *fsm)
 }
 
 
-void ParserFSM_init(parserFSM_t *fsm)
+void ParserFSM_init(parserFSM_t *fsm, responseHandler_t responseHandler)
 {
     (*fsm).tickCount = 0;
+    (*fsm).responseHandler = responseHandler;
     buffer_flush(fsm);
-    printf(">");
-    (*(FSM_t*)fsm).estados = (pEstado_t)estados,
-    (*(FSM_t*)fsm).actual = (pEstado_t)estados+eStartState,
+    responseHandler(">");
+    (*(FSM_t*)fsm).estados = (pEstado_t)estados;
+    (*(FSM_t*)fsm).actual = (pEstado_t)estados+eStartState;
+
     FSM_init((FSM_t*)fsm);
 }
 
@@ -124,14 +128,16 @@ void Idle_NewChar(pEstado_t const this, FSM_t* const fsm, void * param)
     else if((*(parserFSM_t*)fsm).buffer_index < BUFFER_SIZE-1)
     {
         (*(parserFSM_t*)fsm).buffer[(*(parserFSM_t*)fsm).buffer_index]=character;
-        putchar(character);
+        char response[2]={character, 0};
+        (*(parserFSM_t*)fsm).responseHandler(response);
+
         return;
     }
     else
     {
         buffer_flush((parserFSM_t*)fsm);
         //puts("\nNumero maximo de caracteres de un comando excedido\n");
-        printf("\n>");
+        (*(parserFSM_t*)fsm).responseHandler("\n>");
         return;
     }
 
@@ -144,13 +150,13 @@ void Idle_Tick10ms(pEstado_t const this, FSM_t* const fsm, void * param)
         (*(parserFSM_t*)fsm).tickCount = 0;
         buffer_flush((parserFSM_t*)fsm);
         //puts("\ntiempo maximo para un comando excedido");
-        printf("\r                                         \r>");
+        (*(parserFSM_t*)fsm).responseHandler("\r                                         \r>");
     }
 }
 void Parsing_Tick10ms(pEstado_t const this, FSM_t* const fsm, void * param)
 {
     buffer_flush((parserFSM_t*)fsm);
-    printf("\n>");
+    (*(parserFSM_t*)fsm).responseHandler("\n>");
     FSM_Transicion(fsm,(pEstado_t)&estados[ESTADO_IDLE],NULL);
 
 }
@@ -160,93 +166,24 @@ extern queue_t queue_Commands;
 void Parsing_Entry(FSM_t * const fsm)
 {
 
-    char *buffer = (*(parserFSM_t*)fsm).buffer;
-    char *equal = strchr(buffer,'=');
-    char *quest = strchr(buffer,'?');
-    char *space = strchr(buffer,' ');
-    uint8_t length;
-
-
-    //puts("\nPARSING:");
-    //puts(buffer);
-
-
-    cmdType_t type;
-
-    ///determino el tipo de comando
-    if(equal == NULL && quest == NULL)      ///si no encuentro ni '=' ni '?' ejecuto
+    command_req_t request =
     {
-        type = exec;
-        if(space == NULL)
-            length = strlen(buffer);
-        else
-            length = space - buffer;
-    }
-    else if(equal == NULL && quest != NULL) ///si no encuentro '=' pero si '?', leo
-    {
-        type = read;
-        length = quest - buffer;
-    }
-    else if(equal != NULL && quest == NULL) ///si encuentro '=' pero no '?', escribo
-    {
-        type = write;
-        length = equal - buffer;
-    }
-    else if(equal < quest)                  ///si encuentro '=' y '?' domina el primero que aparece
-    {
-        type = write;
-        length = equal - buffer;
-    }
-    else
-    {
-        type = read;
-        length = quest - buffer;
-    }
-    buffer[length]='\0';
+        .responseHandler = ((parserFSM_t*)fsm)->responseHandler,
+    };
 
-
-    ///determino el comando
-    int8_t i,elegido;
-    elegido = -1;
-    for(i=0;i< cmdTableSize && length;i++)
+    if(NULL != CommandRequest_init(&request,
+                                   (*(parserFSM_t*)fsm).buffer,
+                                   (command_t*)cmdTable,
+                                   cmdTableSize))
     {
-        if(!strcmp(cmdTable[i].commandID,buffer))
-        {
-            elegido = i;
-            break;
-        }
-    }
-
-    ///ejecuto el comando
-    if(elegido >= 0)
-    {
-        command_req_t request = {
-            .command = (command_t*)&cmdTable[elegido],
-            .type = type,
-            .arg = "",
-            .responseHandler = (responseHandler_t)printf,
-        };
-
-        switch(type)
-        {
-        case write:
-            strcpy(request.arg,equal+1);
-            break;
-        case exec:
-            if(space!= NULL) strcpy(request.arg,space+1);
-            break;
-        default:
-            break;
-        }
-
         queue_write_FIFO(&queue_Commands,&request);
     }
     else
     {
-        printf("\nComando no soportado\n");
+        (*(parserFSM_t*)fsm).responseHandler("\nComando no soportado\n");
     }
 
-    //printf("\n?:%d =:%d SPACE:%d",quest-buffer, equal-buffer, space-buffer);
-    //printf("\nelegido:%d",elegido);
 
 }
+
+
