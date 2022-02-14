@@ -113,23 +113,11 @@ const estado_t estados[eNumberOfStates] =
 
 
 
-FSM_t customFSM =
+
+
+void customFSM_iniciar(FSM_t *fsm)
 {
-    .estados = (pEstado_t)estados,
-    .actual = (pEstado_t)estados+eStartState,
-};
-
-void customFSM_iniciar()
-{
-    //eventosA[eEvtb]=A_b;
-    //eventosB[eEvta]=B_a;
-    //eventosC[eEvtd]=C_d;
-    //eventosD[eEvtc]=D_c;
-
-    //eventosC[eEvtTick10ms]=C_Tick10ms;
-
-
-    FSM_init(&customFSM);
+    FSM_init(fsm);
 }
 
 
@@ -212,7 +200,7 @@ void C_Tick10ms(pEstado_t this, FSM_t* fsm,void* param)
 
 void D_cAction(FSM_t *fsm)
 {
-    puts("\tAccion de transición D->C por evento c");
+    puts("\tAccion de transiciï¿½n D->C por evento c");
 }
 
 void A_process(FSM_t *fsm)

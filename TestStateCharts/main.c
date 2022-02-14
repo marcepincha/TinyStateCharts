@@ -1,4 +1,4 @@
-/** \brief Módulo único, prototipo de lo que será la biblioteca para el manejo e implementación
+/** \brief Mï¿½dulo ï¿½nico, prototipo de lo que serï¿½ la biblioteca para el manejo e implementaciï¿½n
 de StateCharts en C.
  *
  *  10/11/2015
@@ -14,11 +14,17 @@ de StateCharts en C.
 #include <windows.h>
 #include "TinyStateCharts.h"
 #include "customFSM_events.h"
+#include "customFSM_states.h"
 
 
 
-extern FSM_t customFSM;
-void customFSM_iniciar();
+
+FSM_t customFSM =
+{
+    .estados = (pEstado_t)estados,
+    .actual = (pEstado_t)estados+eStartState,
+};
+void customFSM_iniciar(FSM_t*);
 
 DWORD hilitoTeclado ()
 {
@@ -60,7 +66,7 @@ DWORD hilitoTimer (void* ppp)
 int main()
 {
 
-    customFSM_iniciar();
+    customFSM_iniciar(&customFSM);
 
     CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)hilitoTeclado,NULL,0,NULL);
     CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)hilitoTimer,NULL,0,NULL);
