@@ -55,6 +55,6 @@ void FSM_init(FSM_t * const fsm);
 
 void FSM_Transicion(FSM_t * const fsm, pEstado_t const destino,callbackAction_t const accion);
 void FSM_DispatchEvent(FSM_t * const fsm, evento_t const evento, void* const param);
-void FSM_Process(FSM_t * const fsm);
+void FSM_During(FSM_t * const fsm);
 
 #endif // TINYSTATECHARTS_H_

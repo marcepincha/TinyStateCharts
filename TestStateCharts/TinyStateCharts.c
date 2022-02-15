@@ -7,7 +7,7 @@ pEstado_t FSM_getAncestroComun(pEstado_t const origen, pEstado_t const destino);
 void FSM_exitStates(FSM_t * const fsm, pEstado_t const ancestro)
 {
 
-    //salgo del estado actual desde el nivel más anidado al más externo. Freno en el ancestro común.
+    //salgo del estado actual desde el nivel mï¿½s anidado al mï¿½s externo. Freno en el ancestro comï¿½n.
 
 
 
@@ -29,9 +29,9 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
     pEstado_t pila[MAX_NESTED_LEVELS]= {0};
     uint8_t index = 0;
 
-    /// Considero que al entrar a un estado entro al hijo por default o al estado histórico.
-    /// Eso ocurre hasta el último nivel de anidamiento
-    /// Dicho hijo será el retorno de esta función
+    /// Considero que al entrar a un estado entro al hijo por default o al estado histï¿½rico.
+    /// Eso ocurre hasta el ï¿½ltimo nivel de anidamiento
+    /// Dicho hijo serï¿½ el retorno de esta funciï¿½n
     pEstado_t aux = destino;
     while((*aux).hijoDefault != NULL || ((*aux).guardaHistoria && (*aux).historia != NULL) )
     {
@@ -46,8 +46,8 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
     }
     pEstado_t hijo = aux;
 
-    /// "pusheo" en una pila los estados desde el nivel de anidamiento más bajo hasta
-    /// el ancestro común
+    /// "pusheo" en una pila los estados desde el nivel de anidamiento mï¿½s bajo hasta
+    /// el ancestro comï¿½n
     while(aux != NULL && aux != ancestro)
     {
         //push
@@ -63,7 +63,7 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
         aux = padre;
     }
 
-    /// Ejecuto los entry() de los estados del nivel más externo al más interno
+    /// Ejecuto los entry() de los estados del nivel mï¿½s externo al mï¿½s interno
     while(index)
     {
         //Pop
@@ -150,7 +150,7 @@ void FSM_DispatchEvent(FSM_t *const fsm, const evento_t evento, void* const para
 
 }
 
-void FSM_Process(FSM_t * const fsm)
+void FSM_During(FSM_t * const fsm)
 {
     pEstado_t aux;
 

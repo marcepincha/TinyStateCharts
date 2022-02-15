@@ -74,7 +74,7 @@ int main()
     do
     {
         Sleep(1000);
-        FSM_Process(&customFSM);
+        FSM_During(&customFSM);
     }
     while(1);
 
