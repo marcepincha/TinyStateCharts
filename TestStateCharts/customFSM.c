@@ -39,12 +39,12 @@ void C_process(FSM_t *fsm);
 void D_process(FSM_t *fsm);
 
 
-void A_b(pEstado_t this, FSM_t* fsm,void* param);
-void B_a(pEstado_t this, FSM_t* fsm,void* param);
-void C_d(pEstado_t this, FSM_t* fsm,void* param);
-void D_c(pEstado_t this, FSM_t* fsm,void* param);
+void A_b( FSM_t* fsm,void* param);
+void B_a( FSM_t* fsm,void* param);
+void C_d( FSM_t* fsm,void* param);
+void D_c( FSM_t* fsm,void* param);
 
-void C_Tick10ms(pEstado_t this, FSM_t* fsm,void* param);
+void C_Tick10ms(FSM_t* fsm,void* param);
 
 void D_cAction(FSM_t *fsm);
 
@@ -166,29 +166,29 @@ void D_exit(FSM_t *fsm)
 }
 
 
-void A_b(pEstado_t this, FSM_t* fsm,void* param)
+void A_b(FSM_t* fsm,void* param)
 {
     //GUARDAS
     FSM_Transicion(fsm,(fsm->estados)+eStateB,NULL);
 }
 
-void B_a(pEstado_t this, FSM_t* fsm,void* param)
+void B_a(FSM_t* fsm,void* param)
 {
     //GUARDAS
     FSM_Transicion(fsm,(fsm->estados)+eStateA,NULL);
 }
-void C_d(pEstado_t this, FSM_t* fsm,void* param)
+void C_d(FSM_t* fsm,void* param)
 {
     //GUARDAS
     FSM_Transicion(fsm,(fsm->estados)+eStateD,NULL);
 }
-void D_c(pEstado_t this, FSM_t* fsm,void* param)
+void D_c(FSM_t* fsm,void* param)
 {
     //GUARDAS
     FSM_Transicion(fsm,(fsm->estados)+eStateC,D_cAction);
 }
 
-void C_Tick10ms(pEstado_t this, FSM_t* fsm,void* param)
+void C_Tick10ms( FSM_t* fsm,void* param)
 {
     C_ticks10ms++;
     //timeout a los 5 seg. vuelvo directo a StateA

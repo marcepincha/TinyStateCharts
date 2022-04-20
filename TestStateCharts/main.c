@@ -13,18 +13,20 @@ de StateCharts en C.
 #include <stdint.h>
 #include <windows.h>
 #include "TinyStateCharts.h"
+#include "SignalGenerator.h"
 #include "customFSM_events.h"
 #include "customFSM_states.h"
 
+extern FSM_t SG_fsm;
 
 
 
 FSM_t customFSM =
-{
-    .estados = (pEstado_t)estados,
-    .actual = (pEstado_t)estados+eStartState,
+{(pEstado_t)estados+eStartState,
+(pEstado_t)estados
 };
 void customFSM_iniciar(FSM_t*);
+
 
 DWORD hilitoTeclado ()
 {
@@ -66,7 +68,22 @@ DWORD hilitoTimer (void* ppp)
 int main()
 {
 
+    FSM_init(&SG_fsm);
     customFSM_iniciar(&customFSM);
+
+    FSM_DispatchEvent(&SG_fsm, SG_cmd_stop,NULL);
+    FSM_DispatchEvent(&SG_fsm, SG_cmd_stop, NULL);
+
+    FSM_DispatchEvent(&SG_fsm, SG_cmd_start, NULL);
+    FSM_DispatchEvent(&SG_fsm, SG_cmd_start, NULL);
+
+    FSM_DispatchEvent(&SG_fsm, SG_cmd_set_sync, NULL);
+    FSM_DispatchEvent(&SG_fsm, SG_cmd_set_async, NULL);
+    FSM_DispatchEvent(&SG_fsm, SG_cmd_stop, NULL);
+
+
+
+
 
     CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)hilitoTeclado,NULL,0,NULL);
     CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)hilitoTimer,NULL,0,NULL);

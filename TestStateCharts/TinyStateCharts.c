@@ -55,7 +55,7 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
         index++;
 
         pEstado_t padre = (*aux).padre;
-        if(padre != NULL)
+        if(padre != NULL && (*padre).historia != NULL && (*padre).guardaHistoria != 0)
         {
             pEstado_t * historia = (pEstado_t*) (*padre).historia;
             *historia = aux;
@@ -68,9 +68,10 @@ pEstado_t FSM_enterStates(FSM_t * const fsm,pEstado_t const destino, pEstado_t c
     {
         //Pop
         index--;
+        (*fsm).actual = pila[index];
         if( (*pila[index]).entry)
             (*pila[index]).entry(fsm);
-        (*fsm).actual = pila[index];
+
 
 
     }
@@ -129,8 +130,12 @@ void FSM_DispatchEvent(FSM_t *const fsm, const evento_t evento, void* const para
     evtHandler_t *handlersVector;
     pEstado_t aux;
 
-    aux = (*fsm).actual;
 
+    /***
+    ejecuta el event handler desde el estado actual hasta el estado más externo que lo contenga
+    ****/
+
+    aux = (*fsm).actual;
     while(aux != NULL)
     {
         handlersVector = (evtHandler_t*)((*aux).eventHandlers);
@@ -139,7 +144,7 @@ void FSM_DispatchEvent(FSM_t *const fsm, const evento_t evento, void* const para
             evtHandler_t handler = handlersVector[evento];
             if(handler != NULL)
             {
-                handler((*fsm).actual,fsm,param);
+                handler(fsm,param);
                 return;
             }
         }

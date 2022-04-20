@@ -23,8 +23,8 @@ typedef uint16_t evento_t;
 struct estFSM;
 typedef struct estFSM FSM_t;
 
-typedef void (*callback_t)(FSM_t * const fsm);
-typedef void (*evtHandler_t)(pEstado_t const this, FSM_t* const fsm,void* const param);
+typedef void (*callback_t)      (FSM_t* const fsm);
+typedef void (*evtHandler_t)    (FSM_t* const fsm,  void* const param);
 typedef void (*callbackAction_t)(FSM_t* const fsm);
 
 //#include "customFSM_events.h"
@@ -40,6 +40,8 @@ struct estEstado
     const callback_t entry;
     const callback_t exit;
     const callback_t process;
+
+    const char* nombre;
 
 };
 
