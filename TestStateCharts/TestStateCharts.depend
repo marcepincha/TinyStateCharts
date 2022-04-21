@@ -29,16 +29,17 @@
 
 1448192684 c:\users\lenovo\documents\git\teststatecharts\customfsm_events.h
 
-1650461499 source:d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\main.c
+1650484785 source:d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdint.h>
 	<windows.h>
 	"TinyStateCharts.h"
-	"customFSM_events.h"
 	"SignalGenerator.h"
+	"customFSM_events.h"
+	"customFSM_states.h"
 
-1650460768 d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\tinystatecharts.h
+1650544917 d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\tinystatecharts.h
 	<stdint.h>
 
 1650458119 d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\customfsm_events.h
@@ -46,7 +47,7 @@
 1650458119 d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\customfsm_states.h
 	"TinyStateCharts.h"
 
-1650476238 source:d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\tinystatecharts.c
+1650544856 source:d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\tinystatecharts.c
 	"TinyStateCharts.h"
 
 1650458311 source:d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\customfsm.c
@@ -54,9 +55,9 @@
 	"customFSM_events.h"
 	<stdio.h>
 
-1650484499 source:d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\signalgenerator.c
+1650545695 source:d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\signalgenerator.c
 	"TinyStateCharts.h"
 	"SignalGenerator.h"
 
-1650480203 d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\signalgenerator.h
+1650545550 d:\usuarios\usuario\downloads\tinystatecharts\teststatecharts\signalgenerator.h
 

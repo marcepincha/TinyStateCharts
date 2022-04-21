@@ -18,6 +18,7 @@ void SG_entryCommon       (FSM_t* const fsm);
     Tabla de manejadores de eventos
 ***/
 const evtHandler_t SG_evtTable[SG_NUM_STATES][SG_NUM_EVENTS] ={
+    {NULL,},
     {evth_PrenderSignalGenerator,  NULL,},
     {NULL,               evth_ApagarSignalGenerator,},
     {NULL,               NULL,      NULL,   NULL,   NULL, evth_SetearClockInterno},
@@ -32,8 +33,21 @@ const evtHandler_t SG_evtTable[SG_NUM_STATES][SG_NUM_EVENTS] ={
     Arreglo con definición de estados
 ***/
 const estado_t SG_stateTable[SG_NUM_STATES] ={
-    [SG_OFF]={
+    [SG_SIGNAL_GENERATOR]={
         .padre          = NULL,
+        .hijoDefault    = SG_stateTable+SG_OFF,
+        .historia       = NULL,
+        .guardaHistoria = NO_GUARDA_HISTORIA,
+
+        .eventHandlers  = SG_evtTable[SG_SIGNAL_GENERATOR],
+        .entry          = SG_entryCommon,
+        .exit           = NULL,
+        .process        = NULL,
+
+        .nombre = "SIGNAL_GENERATOR",
+    },
+    [SG_OFF]={
+        .padre          = SG_stateTable+SG_SIGNAL_GENERATOR,
         .hijoDefault    = NULL,
         .historia       = NULL,
         .guardaHistoria = NO_GUARDA_HISTORIA,
@@ -46,7 +60,7 @@ const estado_t SG_stateTable[SG_NUM_STATES] ={
         .nombre = "OFF",
     },
     [SG_ON]={
-        .padre          = NULL,
+        .padre          = SG_stateTable+SG_SIGNAL_GENERATOR,
         .hijoDefault    = SG_stateTable+SG_ASYNC,
         .historia       = NULL,
         .guardaHistoria = NO_GUARDA_HISTORIA,
@@ -86,7 +100,7 @@ const estado_t SG_stateTable[SG_NUM_STATES] ={
     },
 };
 
-FSM_t SG_fsm = {.estados=SG_stateTable, .actual=&SG_stateTable[SG_OFF]};
+FSM_t SG_fsm = {.estados=SG_stateTable, .actual=&SG_stateTable[SG_SIGNAL_GENERATOR]};
 
 void evth_PrenderSignalGenerator    (FSM_t* const fsm,  void* const param)
 {
@@ -101,7 +115,9 @@ void evth_SetearClockInterno     (FSM_t* const fsm,  void* const param){
     FSM_Transicion(fsm,&SG_stateTable[SG_ASYNC],NULL);
 }
 void evth_SetearClockExterno     (FSM_t* const fsm,  void* const param){
-    FSM_Transicion(fsm,&SG_stateTable[SG_SYNC],NULL);
+    //FSM_Transicion(fsm,&SG_stateTable[SG_SYNC],NULL);
+    FSM_Transicion_indirecta(fsm,&SG_stateTable[SG_SYNC],&SG_stateTable[SG_SIGNAL_GENERATOR],NULL);
+
 }
 
 

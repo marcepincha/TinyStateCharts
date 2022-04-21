@@ -12,6 +12,7 @@ enum SG_events{
     };
 
 enum SG_states{
+    SG_SIGNAL_GENERATOR,
     SG_OFF,
     SG_ON,
     SG_SYNC,

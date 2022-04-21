@@ -125,6 +125,21 @@ void FSM_Transicion(FSM_t * const fsm, pEstado_t const destino,callbackAction_t 
 
 }
 
+void FSM_Transicion_indirecta(FSM_t * const fsm, pEstado_t const destino,pEstado_t const ancestro,callbackAction_t const accion)
+{
+
+    FSM_exitStates(fsm, ancestro);
+
+    ///patron template
+    if(accion != NULL)
+        accion(fsm);
+
+    FSM_enterStates(fsm,destino,ancestro);
+
+    //(*fsm).actual = hijo;
+
+}
+
 void FSM_DispatchEvent(FSM_t *const fsm, const evento_t evento, void* const param)
 {
     evtHandler_t *handlersVector;

@@ -16,6 +16,7 @@ de StateCharts en C.
 #include "SignalGenerator.h"
 #include "customFSM_events.h"
 #include "customFSM_states.h"
+#include <locale.h>
 
 extern FSM_t SG_fsm;
 
@@ -67,6 +68,7 @@ DWORD hilitoTimer (void* ppp)
 
 int main()
 {
+    setlocale(LC_CTYPE,"spanish");
 
     FSM_init(&SG_fsm);
     customFSM_iniciar(&customFSM);

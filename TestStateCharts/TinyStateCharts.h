@@ -56,6 +56,8 @@ struct estFSM
 void FSM_init(FSM_t * const fsm);
 
 void FSM_Transicion(FSM_t * const fsm, pEstado_t const destino,callbackAction_t const accion);
+void FSM_Transicion_indirecta(FSM_t * const fsm, pEstado_t const destino,pEstado_t const ancestro,callbackAction_t const accion);
+
 void FSM_DispatchEvent(FSM_t * const fsm, evento_t const evento, void* const param);
 void FSM_During(FSM_t * const fsm);
 
